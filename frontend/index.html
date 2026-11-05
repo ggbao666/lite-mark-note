@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Typora Lite</title>
+</head>
+<body>
+  <div id="app">
+    <header class="titlebar">
+      <div class="title-left">
+        <!-- 工作区 -->
+        <button id="btn-workspace" class="icon-btn" title="切换工作区">
+          <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><polyline points="15 12 18 15 15 18"/><line x1="18" y1="15" x2="10" y2="15"/></svg>
+        </button>
+        <span class="divider"></span>
+        <!-- 文件操作 -->
+        <button id="btn-save" class="icon-btn" title="保存 (Ctrl+S)">
+          <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        </button>
+        <span class="divider"></span>
+        <!-- 查找 -->
+        <button id="btn-find" class="icon-btn" title="查找 / 替换 (Ctrl+F / Ctrl+H)">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+        </button>
+        <span class="divider"></span>
+        <!-- 插入（源码模式下隐藏） -->
+        <button id="tb-insert" class="icon-btn" title="插入 3x3 表格">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+        </button>
+        <button id="tb-link" class="icon-btn" title="插入链接">
+          <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </button>
+      </div>
+      <div class="title-center" id="file-title">未命名</div>
+      <div class="title-right">
+        <!-- 模式切换：所见即所得时显示代码图标，源码模式时显示眼睛图标 -->
+        <button id="btn-mode" class="icon-btn mode-toggle" title="切换到源码模式 (Ctrl+/)">
+          <svg class="icon-code" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <svg class="icon-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+        <button id="btn-outline" class="icon-btn" title="显示 / 隐藏目录大纲">
+          <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </button>
+        <span class="divider"></span>
+        <button id="btn-theme" class="icon-btn theme-toggle" title="切换明暗主题">
+          <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button id="btn-settings" class="icon-btn" title="设置">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="content-row">
+      <!-- 左侧工作区文件树 -->
+      <aside id="workspace-panel" class="workspace-panel hidden">
+        <div class="ws-header">
+          <button id="ws-search-btn" class="icon-btn" title="筛选笔记">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+          </button>
+          <input id="ws-search" class="ws-search hidden" type="text" placeholder="筛选笔记…" spellcheck="false" />
+          <div class="ws-actions">
+            <button id="ws-new-note" class="icon-btn" title="新建笔记">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="12" x2="12" y2="18"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            </button>
+            <button id="ws-new-folder" class="icon-btn" title="新建文件夹">
+              <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+            </button>
+            <button id="ws-switch" class="icon-btn" title="切换工作区">
+              <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div id="ws-tree" class="ws-tree"></div>
+      </aside>
+
+      <main class="editor-wrap">
+        <div class="paper">
+          <div id="editor-empty" class="editor-empty hidden">从左侧选择一篇笔记，或点击右上角 ＋ 新建</div>
+          <div id="tiptap-editor"></div>
+          <div id="source-wrap" class="source-wrap hidden">
+            <div id="source-editor" class="source-editor"></div>
+          </div>
+        </div>
+      </main>
+
+      <!-- 右侧目录大纲（默认折叠） -->
+      <aside id="outline-panel" class="outline-panel">
+        <div class="outline-header">
+          <span>大纲</span>
+          <button id="btn-outline-close" title="收起">×</button>
+        </div>
+        <div id="outline-list" class="outline-list"></div>
+      </aside>
+    </div>
+
+    <!-- 查找 / 替换 -->
+    <div id="findbar" class="findbar hidden">
+      <div class="findbar-row">
+        <input id="find-input" type="text" placeholder="查找" spellcheck="false" />
+        <span id="find-count" class="find-count">0/0</span>
+        <button id="find-prev" title="上一个 (Shift+Enter)">↑</button>
+        <button id="find-next" title="下一个 (Enter)">↓</button>
+        <button id="find-case" class="find-toggle" title="区分大小写">Aa</button>
+        <button id="find-word" class="find-toggle" title="全词匹配">W</button>
+        <button id="find-regex" class="find-toggle" title="正则表达式">.*</button>
+        <button id="find-show-replace" class="find-toggle" title="显示替换 (Ctrl+H)">替换</button>
+        <button id="find-close" title="关闭 (Esc)">×</button>
+      </div>
+      <div class="findbar-row hidden" id="find-replace-row">
+        <input id="replace-input" type="text" placeholder="替换为" spellcheck="false" />
+        <button id="replace-one" class="find-text-btn">替换</button>
+        <button id="replace-all" class="find-text-btn">全部替换</button>
+      </div>
+    </div>
+
+    <footer class="statusbar">
+      <span id="status-words">0 字</span>
+      <span id="status-mode">所见即所得</span>
+      <span id="status-dirty"></span>
+      <span id="status-path" class="status-path"></span>
+      <button id="status-reveal" class="status-btn hidden" title="打开文件所在目录">打开所在目录</button>
+    </footer>
+  </div>
+
+  <!-- 设置面板 -->
+  <div id="settings-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <h3>设置</h3>
+      <div class="form-row">
+        <label for="set-asset-mode">图片资源存储位置</label>
+        <select id="set-asset-mode">
+          <option value="relative">当前文件所在目录（相对路径引用）</option>
+          <option value="custom">自定义目录（绝对路径引用）</option>
+        </select>
+      </div>
+      <div class="form-row" id="row-assets-folder">
+        <label for="set-assets-folder">资源文件夹名</label>
+        <input id="set-assets-folder" type="text" value="assets" />
+      </div>
+      <div class="form-row hidden" id="row-custom-dir">
+        <label for="set-custom-dir">存储目录</label>
+        <div class="dir-row">
+          <input id="set-custom-dir" type="text" readonly placeholder="未选择" />
+          <button id="btn-choose-dir">浏览…</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="set-theme">主题</label>
+        <select id="set-theme">
+          <option value="dark">暗色（默认）</option>
+          <option value="light">亮色</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>当前工作区</label>
+        <div class="dir-row">
+          <input id="set-workspace" type="text" readonly placeholder="未打开工作区" />
+          <button id="btn-change-workspace">切换…</button>
+        </div>
+      </div>
+      <p class="hint">相对模式：图片存到当前笔记同级目录的资源文件夹，Markdown 中以相对路径引用；自定义模式：图片统一存到指定目录，以绝对路径引用。</p>
+      <div class="modal-actions">
+        <button id="btn-settings-cancel">取消</button>
+        <button id="btn-settings-ok" class="primary">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 启动页：选择工作区 -->
+  <div id="welcome-screen" class="welcome-screen hidden">
+    <div class="welcome-corner">
+      <button id="wc-theme" class="icon-btn theme-toggle" title="切换明暗主题">
+        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button id="wc-settings" class="icon-btn" title="设置">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </div>
+    <div class="welcome-card">
+      <h1>Typora Lite</h1>
+      <p class="welcome-sub">选择一个工作区，开始记录你的笔记</p>
+      <div class="welcome-actions">
+        <button id="wc-choose" class="primary">选择工作区文件夹</button>
+      </div>
+      <div id="wc-recent" class="recent-list hidden">
+        <div class="recent-title">最近的工作区</div>
+        <div id="wc-recent-items" class="recent-items"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 关闭询问 -->
+  <div id="exit-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <h3>关闭 Typora Lite</h3>
+      <p class="hint">留在后台：软件驻留在系统托盘（屏幕右下角），双击 .md 文件可立即打开，速度更快；可随时从托盘菜单完全退出。</p>
+      <label class="check-row">
+        <input type="checkbox" id="exit-remember" />
+        记住我的选择，下次不再询问
+      </label>
+      <div class="modal-actions">
+        <button id="btn-exit-cancel">取消</button>
+        <button id="btn-exit-background">留在后台</button>
+        <button id="btn-exit-quit" class="primary">退出软件</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 插入链接 -->
+  <div id="link-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <h3>插入链接</h3>
+      <div class="form-row">
+        <label for="link-text">链接名称</label>
+        <input id="link-text" type="text" placeholder="显示的文字" />
+      </div>
+      <div class="form-row">
+        <label for="link-url">链接地址</label>
+        <input id="link-url" type="text" placeholder="https://example.com" />
+      </div>
+      <div class="modal-actions">
+        <button id="btn-link-cancel">取消</button>
+        <button id="btn-link-ok" class="primary">插入</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 关闭前：未保存内容询问 -->
+  <div id="unsaved-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <h3>文档尚未保存</h3>
+      <p class="hint" id="unsaved-name"></p>
+      <p class="hint">保留：先保存当前内容（未命名文档会弹出保存位置）；废弃：本次修改不再保留。</p>
+      <div class="modal-actions">
+        <button id="btn-unsaved-cancel">取消</button>
+        <button id="btn-unsaved-discard">废弃</button>
+        <button id="btn-unsaved-save" class="primary">保留</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 新建 / 重命名输入框 -->
+  <div id="name-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <h3 id="name-title">新建</h3>
+      <div class="form-row">
+        <label for="name-input">名称</label>
+        <input id="name-input" type="text" spellcheck="false" placeholder="输入名称" />
+      </div>
+      <p class="hint" id="name-hint"></p>
+      <div class="modal-actions">
+        <button id="name-cancel">取消</button>
+        <button id="name-ok" class="primary">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "typora-lite",
+  "outputfilename": "TyporaLite",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "info": {
+    "productName": "Typora Lite",
+    "productVersion": "0.22.3",
+    "comments": "A minimal Typora-style Markdown editor built with Wails + Tiptap"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "typora-lite-frontend",
+  "private": true,
+  "version": "0.22.3",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@codemirror/lang-markdown": "^6.5.2",
+    "@codemirror/language-data": "^6.5.2",
+    "@floating-ui/dom": "^1.8.0",
+    "@tiptap/extension-code-block-lowlight": "^3.32.2",
+    "@tiptap/extension-image": "^3.32.2",
+    "@tiptap/extension-table": "^3.32.2",
+    "@tiptap/extension-task-item": "^3.32.2",
+    "@tiptap/extension-task-list": "^3.32.2",
+    "@tiptap/starter-kit": "^3.32.2",
+    "codemirror": "^6.0.2",
+    "lowlight": "^3.3.0",
+    "tiptap-markdown": "^0.9.0"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  }
+}

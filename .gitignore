@@ -1,0 +1,20 @@
+# 构建产物
+build/bin/
+frontend/dist/
+*.exe
+
+# Wails 自动生成
+frontend/wailsjs/
+frontend/package.json.md5
+
+# 依赖
+node_modules/
+
+# 运行时数据
+drafts/
+
+# 编辑器/系统
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

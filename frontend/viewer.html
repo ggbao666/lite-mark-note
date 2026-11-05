@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>图片查看</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body class="viewer-body">
+  <header class="viewer-toolbar">
+    <button id="vw-zoom-out" title="缩小 (滚轮)">－</button>
+    <span id="vw-zoom-label">100%</span>
+    <button id="vw-zoom-in" title="放大 (Ctrl+滚轮)">＋</button>
+    <span class="vw-sep"></span>
+    <button id="vw-fit" title="适应窗口 (双击图片)">适应窗口</button>
+    <button id="vw-actual" title="原始尺寸">100%</button>
+  </header>
+  <main id="viewer-stage">
+    <img id="viewer-img" alt="" draggable="false" />
+  </main>
+  <script type="module" src="/src/viewer.js"></script>
+</body>
+</html>

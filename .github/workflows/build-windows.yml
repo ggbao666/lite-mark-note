@@ -1,0 +1,66 @@
+name: Build Windows
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Wails CLI
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.17.1
+
+      - name: Build
+        run: wails build -platform windows/amd64
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TyporaLite-windows-amd64
+          path: build/bin/TyporaLite.exe
+          if-no-files-found: error
+
+      # 推送 v* 标签：生成带版本号的正式 Release
+      - name: Publish versioned release
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        run: gh release create "${{ github.ref_name }}" build/bin/TyporaLite.exe --generate-notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 推送到 main：更新滚动 Release（固定 latest 标签），每次覆盖上传最新 exe
+      - name: Publish latest release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: pwsh
+        run: |
+          $ver = (Get-Content wails.json -Raw | ConvertFrom-Json).info.productVersion
+          gh release view latest 2>$null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create latest --title "Typora Lite v$ver（最新构建）" --notes "由 ${{ github.sha }} 自动构建"
+          }
+          gh release upload latest build/bin/TyporaLite.exe --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
