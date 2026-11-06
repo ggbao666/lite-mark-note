@@ -60,6 +60,8 @@ jobs:
           gh release view latest 2>$null
           if ($LASTEXITCODE -ne 0) {
             gh release create latest --title "LiteMark Note v$ver（最新构建）" --notes "由 ${{ github.sha }} 自动构建"
+          } else {
+            gh release edit latest --title "LiteMark Note v$ver（最新构建）"
           }
           gh release upload latest build/bin/LiteMarkNote.exe --clobber
         env:
