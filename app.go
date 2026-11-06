@@ -80,8 +80,14 @@ func (a *App) ConfirmClose(action string, remember bool) {
 func (a *App) showMainWindow() {
 	reset := a.resetOnShow
 	a.resetOnShow = false
-	runtime.EventsEmit(a.ctx, "window-shown", reset)
+	// 先显示窗口再通知前端，前端收到事件后才能正确调整窗口尺寸
 	runtime.WindowShow(a.ctx)
+	// 关闭到后台后重开的一定是欢迎页，统一在 Go 侧恢复小窗口
+	if reset {
+		runtime.WindowSetSize(a.ctx, pickerWindowWidth, pickerWindowHeight)
+		runtime.WindowCenter(a.ctx)
+	}
+	runtime.EventsEmit(a.ctx, "window-shown", reset)
 }
 
 // serveSingleInstance 单实例服务：接收第二实例的唤出窗口请求

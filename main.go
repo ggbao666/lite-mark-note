@@ -40,6 +40,12 @@ var nativeTheme = &windows.ThemeSettings{
 	LightModeBorderInactive:    0x00E5E5E5,
 }
 
+// 欢迎页（工作区选择页）窗口尺寸，与前端 PICKER_WIDTH/HEIGHT 保持一致
+const (
+	pickerWindowWidth  = 430
+	pickerWindowHeight = 470
+)
+
 // viewerMode 图片查看器进程模式（--image-viewer 启动时为 true）
 var viewerMode = false
 
@@ -198,8 +204,8 @@ func main() {
 
 	err = wails.Run(&options.App{
 		Title:  "LiteMark Note",
-		Width:  540,
-		Height: 420,
+		Width:  pickerWindowWidth,
+		Height: pickerWindowHeight,
 		DragAndDrop: &options.DragAndDrop{
 			EnableFileDrop:     true,
 			DisableWebViewDrop: true, // 文件拖放统一由 wails 事件处理，避免 webview 直接打开

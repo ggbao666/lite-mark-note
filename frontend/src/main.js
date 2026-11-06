@@ -1117,8 +1117,8 @@ function jumpToHeading(item) {
 
 // ---------- 工作区 ----------
 // 选择工作区时窗口较小，进入工作区后放大
-const PICKER_WIDTH = 540
-const PICKER_HEIGHT = 420
+const PICKER_WIDTH = 430
+const PICKER_HEIGHT = 470
 const EDITOR_WIDTH = 900
 const EDITOR_HEIGHT = 640
 
@@ -1886,8 +1886,13 @@ function resetToWorkspacePicker() {
 // 窗口被唤出（托盘/再次双击 exe）：
 // 关闭到后台的重开 → 工作区选择页；尚未进入编辑状态 → 补显选择页
 window.runtime?.EventsOn?.('window-shown', (reset) => {
-  if (reset && docOpen) resetToWorkspacePicker()
-  else if (!docOpen) showWelcome()
+  if (reset && docOpen) {
+    resetToWorkspacePicker()
+  } else if (!docOpen) {
+    showWelcome()
+    // 从后台唤回时，欢迎页始终恢复为小窗口
+    wails()?.SetWindowSize(PICKER_WIDTH, PICKER_HEIGHT)
+  }
 })
 
 // ---------- 初始化 ----------
