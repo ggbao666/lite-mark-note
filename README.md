@@ -1,9 +1,9 @@
-# Typora Lite
+# LiteMark Note
 
 一个用 **Go + Wails + Tiptap** 实现的 Markdown 笔记软件：以「工作区」文件夹为根目录，
 左侧文件树管理笔记，右侧居中纸张排版，所见即所得编辑，随时切到源码模式查看/修改文件原文。
 
-![选择工作区](docs/images/welcome-light.png)
+![选择工作区](docs/images/welcome-dark.png)
 
 ## 界面预览
 
@@ -36,7 +36,7 @@
 - **图片**：粘贴、拖拽图片自动落盘到资源目录，可右键放大查看（详见下一节）。
 - **大纲目录**：右侧可折叠面板；源码模式下按纯文本里的 `#` 行定位。
 - **明暗主题**：整套配色（含 Windows 原生标题栏）随之切换。
-- **其它**：切换笔记前自动落盘、2 秒防抖自动保存、标题栏点击重命名、系统托盘常驻、最近工作区列表。
+- **其它**：切换笔记前自动落盘、2 秒防抖自动保存、标题栏点击重命名、系统托盘常驻（双击托盘图标可唤出主窗口）、最近工作区列表。
 - **状态栏**：字数、当前模式、保存状态、工作区目录，以及一键「打开所在目录」在资源管理器中打开工作区；顶部工具栏左侧有「切换工作区」按钮。
 
 ## 工作区
@@ -122,7 +122,7 @@ go install github.com/wailsapp/wails/v2/cmd/wails@v2.17.1
 
 cd frontend && npm install && cd ..
 
-wails build            # 产物：build/bin/TyporaLite.exe
+wails build            # 产物：build/bin/LiteMarkNote.exe
 wails dev              # 开发模式（前端热更新）
 ```
 
@@ -130,10 +130,10 @@ wails dev              # 开发模式（前端热更新）
 
 仓库内置 GitHub Actions 工作流 [.github/workflows/build-windows.yml](.github/workflows/build-windows.yml)，只构建 Windows x64 版本：
 
-- **推送到 `main`**：构建后自动发布 / 更新滚动 Release（固定标签 `latest`，每次覆盖上传最新的 `TyporaLite.exe`），下载地址固定为
-  `https://github.com/<owner>/<repo>/releases/download/latest/TyporaLite.exe`
-- **推送 `v*` 标签**：额外创建带版本号的正式 Release（自动生成更新说明），并附带 `TyporaLite.exe`。
-- **PR / 手动触发**：只构建并上传 artifact `TyporaLite-windows-amd64`，不发布 Release。
+- **推送到 `main`**：构建后自动发布 / 更新滚动 Release（固定标签 `latest`，每次覆盖上传最新的 `LiteMarkNote.exe`），下载地址固定为
+  `https://github.com/<owner>/<repo>/releases/download/latest/LiteMarkNote.exe`
+- **推送 `v*` 标签**：额外创建带版本号的正式 Release（自动生成更新说明），并附带 `LiteMarkNote.exe`。
+- **PR / 手动触发**：只构建并上传 artifact `LiteMarkNote-windows-amd64`，不发布 Release。
 
 发版只需：
 
@@ -145,7 +145,7 @@ git push origin v0.22.0
 ## 目录结构
 
 ```
-typora-lite/
+lite-mark-note/
 ├─ app.go                # Wails 绑定：文件读写、图片存储、设置
 ├─ workspace.go          # 工作区：目录树、新建/重命名/删除笔记与文件夹
 ├─ main.go               # 窗口、托盘、单实例、图片查看器

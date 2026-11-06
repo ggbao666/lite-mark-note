@@ -44,6 +44,15 @@ func configFilePath() (string, error) {
 	if err != nil {
 		return "", err
 	}
+	return filepath.Join(cfg, "LiteMarkNote", "settings.json"), nil
+}
+
+// legacyConfigFilePath 改名前的设置文件；首次启动时兼容读取一次
+func legacyConfigFilePath() (string, error) {
+	cfg, err := os.UserConfigDir()
+	if err != nil {
+		return "", err
+	}
 	return filepath.Join(cfg, "TyporaLite", "settings.json"), nil
 }
 
@@ -56,7 +65,13 @@ func loadSettings() Settings {
 	}
 	data, err := os.ReadFile(path)
 	if err != nil {
-		return s
+		// 兼容旧版本的设置文件，避免用户重新选择工作区
+		if old, e := legacyConfigFilePath(); e == nil {
+			data, err = os.ReadFile(old)
+		}
+		if err != nil {
+			return s
+		}
 	}
 	_ = json.Unmarshal(data, &s)
 	if s.AssetsFolder == "" {
@@ -96,5 +111,5 @@ func DefaultAssetsDir() string {
 	if err != nil {
 		return "assets"
 	}
-	return filepath.Join(home, "Documents", "TyporaLite", "assets")
+	return filepath.Join(home, "Documents", "LiteMarkNote", "assets")
 }

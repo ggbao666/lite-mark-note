@@ -1116,6 +1116,12 @@ function jumpToHeading(item) {
 }
 
 // ---------- 工作区 ----------
+// 选择工作区时窗口较小，进入工作区后放大
+const PICKER_WIDTH = 540
+const PICKER_HEIGHT = 420
+const EDITOR_WIDTH = 900
+const EDITOR_HEIGHT = 640
+
 let workspacePath = ''
 let workspaceTree = []
 let activeDir = '' // 新建笔记/文件夹的目标目录
@@ -1178,6 +1184,8 @@ async function openWorkspacePath(dir) {
     closeWsSearch(true)
     refreshHeader()
     renderTree()
+    // 进入工作区后窗口放大到适合编辑的尺寸
+    wails()?.SetWindowSize(EDITOR_WIDTH, EDITOR_HEIGHT)
   } catch (e) {
     alert('打开工作区失败：' + (e?.message || e))
   }
@@ -1871,6 +1879,7 @@ function resetToWorkspacePicker() {
   setEditorEnabled(false)
   refreshHeader()
   wails()?.ClosePath()
+  wails()?.SetWindowSize(PICKER_WIDTH, PICKER_HEIGHT)
   showWelcome()
 }
 

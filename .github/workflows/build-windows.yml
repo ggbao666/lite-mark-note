@@ -39,15 +39,15 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: TyporaLite-windows-amd64
-          path: build/bin/TyporaLite.exe
+          name: LiteMarkNote-windows-amd64
+          path: build/bin/LiteMarkNote.exe
           if-no-files-found: error
 
       # 推送 v* 标签：生成带版本号的正式 Release
       - name: Publish versioned release
         if: startsWith(github.ref, 'refs/tags/v')
         shell: pwsh
-        run: gh release create "${{ github.ref_name }}" build/bin/TyporaLite.exe --generate-notes
+        run: gh release create "${{ github.ref_name }}" build/bin/LiteMarkNote.exe --generate-notes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -59,8 +59,8 @@ jobs:
           $ver = (Get-Content wails.json -Raw | ConvertFrom-Json).info.productVersion
           gh release view latest 2>$null
           if ($LASTEXITCODE -ne 0) {
-            gh release create latest --title "Typora Lite v$ver（最新构建）" --notes "由 ${{ github.sha }} 自动构建"
+            gh release create latest --title "LiteMark Note v$ver（最新构建）" --notes "由 ${{ github.sha }} 自动构建"
           }
-          gh release upload latest build/bin/TyporaLite.exe --clobber
+          gh release upload latest build/bin/LiteMarkNote.exe --clobber
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

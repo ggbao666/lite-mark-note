@@ -90,17 +90,20 @@ func notifyExistingInstance() bool {
 func runTray(ctx context.Context, a *App) {
 	systray.Run(func() {
 		systray.SetIcon(trayIconBytes)
-		systray.SetTooltip("Typora Lite")
-		systray.SetTitle("Typora Lite")
+		systray.SetTooltip("LiteMark Note")
+		systray.SetTitle("LiteMark Note")
 		mShow := systray.AddMenuItem("显示主窗口", "显示编辑器窗口")
 		systray.AddSeparator()
-		mQuit := systray.AddMenuItem("退出 Typora Lite", "完全退出软件")
-		mShow.Click(func() {
+		mQuit := systray.AddMenuItem("退出 LiteMark Note", "完全退出软件")
+		showFromTray := func() {
 			if ctx != nil {
 				forceQuit = false
 				a.showMainWindow()
 			}
-		})
+		}
+		// 双击托盘图标唤出主窗口
+		systray.SetOnDClick(func(menu systray.IMenu) { showFromTray() })
+		mShow.Click(showFromTray)
 		mQuit.Click(func() {
 			forceQuit = true
 			if ctx != nil {
@@ -167,7 +170,7 @@ func viewerAssetMiddleware(next http.Handler) http.Handler {
 }
 
 func main() {
-	// 查看器模式：TyporaLite.exe --image-viewer <图片路径>
+	// 查看器模式：LiteMarkNote.exe --image-viewer <图片路径>
 	args := os.Args[1:]
 	if len(args) >= 2 && args[0] == "--image-viewer" {
 		viewerMode = true
@@ -194,9 +197,9 @@ func main() {
 	}
 
 	err = wails.Run(&options.App{
-		Title:  "Typora Lite",
-		Width:  620,
-		Height: 460,
+		Title:  "LiteMark Note",
+		Width:  540,
+		Height: 420,
 		DragAndDrop: &options.DragAndDrop{
 			EnableFileDrop:     true,
 			DisableWebViewDrop: true, // 文件拖放统一由 wails 事件处理，避免 webview 直接打开

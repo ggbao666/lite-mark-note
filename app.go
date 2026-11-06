@@ -336,6 +336,21 @@ func (a *App) ViewImage(path string) error {
 	return exec.Command(exe, "--image-viewer", abs).Start()
 }
 
+// SetWindowSize 调整主窗口尺寸并居中显示
+func (a *App) SetWindowSize(width, height int) {
+	if a.ctx == nil {
+		return
+	}
+	if width < 420 {
+		width = 420
+	}
+	if height < 320 {
+		height = 320
+	}
+	runtime.WindowSetSize(a.ctx, width, height)
+	runtime.WindowCenter(a.ctx)
+}
+
 // OpenFolder 在资源管理器中打开文件夹（文件则定位到它）
 func (a *App) OpenFolder(path string) error {
 	abs, err := filepath.Abs(path)
